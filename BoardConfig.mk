@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2018 The LineageOS Project
+# Copyright (C) 2020 The LineageOS Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,12 +13,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+LOCAL_PATH := device/samsung/a3xelte
 
 # Inherit from universal7580-common
 include device/samsung/universal7580-common/BoardConfigCommon.mk
 
-LOCAL_PATH := device/samsung/a3xelte
+# Special Firmware requirements
+TARGET_NO_BOOTLOADER := true
+TARGET_NO_RADIOIMAGE := true
 
+# OTA Assert
 TARGET_OTA_ASSERT_DEVICE := a3xelte,a3xeltexx,a3xelteub,a3xeltedo
 
 # Bluetooth
@@ -47,7 +51,12 @@ BOARD_USERDATAIMAGE_PARTITION_SIZE := 12096372736
 BOARD_FLASH_BLOCK_SIZE := 4096
 
 # Kernel
-TARGET_KERNEL_CONFIG := lineageos_a3xelte_defconfig
+TARGET_KERNEL_CONFIG := a3xelte_defconfig
+TARGET_KERNEL_SOURCE := kernel/samsung/universal7580
+TARGET_KERNEL_ARCH := arm64
+TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-android-
+KERNEL_TOOLCHAIN := $(BUILD_TOP)/prebuilts/gcc/$(HOST_OS)-x86/aar>
+TARGET_LINUX_KERNEL_VERSION := 3.10
 
 # Shim
 TARGET_LD_SHIM_LIBS += \
@@ -55,6 +64,7 @@ TARGET_LD_SHIM_LIBS += \
     /system/lib/libstagefright.so|/vendor/lib/libstagefright_shim.so \
     /system/lib/libexynoscamera.so|/vendor/lib/libexynoscamera_shim.so
 
-# Legacy BLOB Support
+# Legacy Blobs Support
 TARGET_PROCESS_SDK_VERSION_OVERRIDE += \
     /system/vendor/bin/hw/rild=27
+
